@@ -1,0 +1,32 @@
+name: Auto Generate News
+
+on:
+  schedule:
+    - cron: "0 11 * * *"  # Runs every day at 11:00 UTC
+  workflow_dispatch:  # Allows manual execution
+
+jobs:
+  run-news-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.9"
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Python script
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
+          WP_ACCESS_TOKEN: ${{ secrets.WP_ACCESS_TOKEN }}
+          WP_BLOG_ID: ${{ secrets.WP_BLOG_ID }}
+        run: python auto_gen_news.py
