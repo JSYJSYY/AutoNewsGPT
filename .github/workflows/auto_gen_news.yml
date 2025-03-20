@@ -2,7 +2,7 @@ name: Auto Generate News
 
 on:
   schedule:
-    - cron: "0 11 * * *"  # Runs every day at 11:00 UTC
+    - cron: "0 16 * * *"  # Runs every day at 8:00 AM Pacific Time (PT)
   workflow_dispatch:  # Allows manual execution
 
 jobs:
